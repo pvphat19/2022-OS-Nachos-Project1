@@ -48,6 +48,20 @@
 //	is in machine.h.
 //----------------------------------------------------------------------
 
+void increase_PC(){
+	/* Modify return point */
+	{
+	  /* set previous programm counter (debugging only)*/
+	  kernel->machine->WriteRegister(PrevPCReg, kernel->machine->ReadRegister(PCReg));
+
+	  /* set programm counter to next instruction (all Instructions are 4 byte wide)*/
+	  kernel->machine->WriteRegister(PCReg, kernel->machine->ReadRegister(PCReg) + 4);
+	  
+	  /* set next programm counter for brach execution */
+	  kernel->machine->WriteRegister(NextPCReg, kernel->machine->ReadRegister(PCReg)+4);
+	}
+}
+
 void
 ExceptionHandler(ExceptionType which)
 {
@@ -95,6 +109,82 @@ ExceptionHandler(ExceptionType which)
 	ASSERTNOTREACHED();
 
 	break;
+
+	/*==========================ADDING PART==============================*/
+	case SC_ReadNum: // ReadNum
+
+
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+
+
+	case SC_PrintNum: //PrintNum
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+
+
+
+	case SC_ReadChar: //ReadChar
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+
+
+
+	case SC_PrintChar: //PrintChar
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+
+
+
+	case SC_RandomNum: //RandomNum
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+
+
+
+	case SC_ReadString://ReadString
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+
+	case SC_PrintString: //PrintString
+
+	increase_PC();
+
+	return;
+
+	ASSERTNOTREACHED();
+	break;
+	/*==========================END======================================*/
 
       default:
 	cerr << "Unexpected system call " << type << "\n";
