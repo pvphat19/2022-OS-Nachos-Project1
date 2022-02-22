@@ -101,6 +101,28 @@ ExceptionHandler(ExceptionType which)
 	break;
       }
       break;
+
+	
+	/*==========================ADD===========================*/
+
+	case NoException: // Everything ok!
+	kernel->interrupt->setStatus(SystemMode);
+	break;
+	case PageFaultException:    // No valid translation foundf
+	case ReadOnlyException:     // Write attempted to page marked 
+					    // "read-only"
+	case BusErrorException:     // Translation resulted in an 
+					    // invalid physical address
+	case AddressErrorException: // Unaligned reference or one that
+					    // was beyond the end of the
+					    // address space
+	case OverflowException:     // Integer overflow in add or sub.
+	case IllegalInstrException: // Unimplemented or reserved instr.
+	
+	/*==========================END====================*/
+	cerr << "Error: " << which << "\n";
+	SysHalt();
+	break;
     default:
       cerr << "Unexpected user mode exception" << (int)which << "\n";
       break;
