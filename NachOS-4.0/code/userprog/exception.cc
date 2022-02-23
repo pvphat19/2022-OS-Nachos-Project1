@@ -111,26 +111,37 @@ ExceptionHandler(ExceptionType which)
 	break;
 
 	/*==========================ADDING PART==============================*/
+
 	case SC_ReadNum: // ReadNum
+		DEBUG(dbgSys, "Read integer number\n");
 
+		int result;
+		result = SysReadNum();
 
+		DEBUG(dbgSys, "Read number: " << result << "\n");
+		kernel->machine->WriteRegister(2, result); /////////////// chua biet viet vao register nao
 
-	increase_PC();
-
-	return;
-
-	ASSERTNOTREACHED();
-	break;
+		increase_PC();
+		return;
+		ASSERTNOTREACHED();
+		break;
 
 
 	case SC_PrintNum: //PrintNum
 
-	increase_PC();
 
-	return;
+		//////// chua biet doc tu register nao
+		DEBUG(dbgSys, "Write integer number\n");
 
-	ASSERTNOTREACHED();
-	break;
+		//SysPrintNum();
+
+		DEBUG(dbgSys, "Read number: " << result << "\n");
+
+		increase_PC();
+		return;
+
+		ASSERTNOTREACHED();
+		break;
 
 
 

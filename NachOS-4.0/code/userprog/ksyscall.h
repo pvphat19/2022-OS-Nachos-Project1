@@ -80,7 +80,23 @@ int SysReadNum(){
     return result;
 }
 
-
+void SysPrintNum(int number){
+  if (number ==0) kernel->synchConsoleOut->PutChar('0');
+  if (number <0){
+    kernel->synchConsoleOut->PutChar('-');
+    number = - number;
+  }
+  numBuffer = 0;
+  while (number){
+    numBuffer++;
+    int digit = number%10;
+    buffer[numBuffer-1] = '0' + digit;
+    number = number/10;
+  }
+  while (numBuffer > 0){
+    kernel->synchConsoleOut->PutChar(buffer[numBuffer-1]);
+  }
+}
 
 
 
