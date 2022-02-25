@@ -62,8 +62,7 @@ void increase_PC(){
 	}
 }
 
-void
-ExceptionHandler(ExceptionType which)
+void ExceptionHandler(ExceptionType which)
 {
     int type = kernel->machine->ReadRegister(2);
 
@@ -71,147 +70,61 @@ ExceptionHandler(ExceptionType which)
 
     switch (which) {
     case SyscallException:
-      switch(type) {
-      case SC_Halt:
-	DEBUG(dbgSys, "Shutdown, initiated by user program.\n");
+      	switch(type) {
+      		case SC_Halt:
+				DEBUG(dbgSys, "Shutdown, initiated by user program.\n");
 
-	SysHalt();
+				SysHalt();
 
-	ASSERTNOTREACHED();
-	break;
+				ASSERTNOTREACHED();
+				break;
 
-      case SC_Add:
-	DEBUG(dbgSys, "Add " << kernel->machine->ReadRegister(4) << " + " << kernel->machine->ReadRegister(5) << "\n");
+      		case SC_Add:
+				DEBUG(dbgSys, "Add " << kernel->machine->ReadRegister(4) << " + " << kernel->machine->ReadRegister(5) << "\n");
 	
-	/* Process SysAdd Systemcall*/
-	int result;
-	result = SysAdd(/* int op1 */(int)kernel->machine->ReadRegister(4),
-			/* int op2 */(int)kernel->machine->ReadRegister(5));
+				/* Process SysAdd Systemcall*/
+				int result;
+				result = SysAdd(/* int op1 */(int)kernel->machine->ReadRegister(4),
+				/* int op2 */(int)kernel->machine->ReadRegister(5));
 
-	DEBUG(dbgSys, "Add returning with " << result << "\n");
-	/* Prepare Result */
-	kernel->machine->WriteRegister(2, (int)result);
+				DEBUG(dbgSys, "Add returning with " << result << "\n");
+				/* Prepare Result */
+				kernel->machine->WriteRegister(2, (int)result);
 	
-	/* Modify return point */
-	{
-	  /* set previous programm counter (debugging only)*/
-	  kernel->machine->WriteRegister(PrevPCReg, kernel->machine->ReadRegister(PCReg));
+				/* Modify return point */
+				increase_PC();
 
-	  /* set programm counter to next instruction (all Instructions are 4 byte wide)*/
-	  kernel->machine->WriteRegister(PCReg, kernel->machine->ReadRegister(PCReg) + 4);
-	  
-	  /* set next programm counter for brach execution */
-	  kernel->machine->WriteRegister(NextPCReg, kernel->machine->ReadRegister(PCReg)+4);
-	}
-
-	return;
+				return;
 	
-	ASSERTNOTREACHED();
+				ASSERTNOTREACHED();
 
-	break;
+				break;
+			/*case SC_ReadNum: // ReadNum
+				DEBUG(dbgSys, "Read integer number\n");
 
-	/*==========================ADDING PART==============================*/
+				/*int result;
+				result = SysReadNum();
 
-	case SC_ReadNum: // ReadNum
-		DEBUG(dbgSys, "Read integer number\n");
+				DEBUG(dbgSys, "Read number: " << result << "\n");
+				kernel->machine->WriteRegister(2, result); /////////////// chua biet viet vao register nao*/
 
-		int result;
-		result = SysReadNum();
-
-		DEBUG(dbgSys, "Read number: " << result << "\n");
-		kernel->machine->WriteRegister(2, result); /////////////// chua biet viet vao register nao
-
-		increase_PC();
-		return;
-		ASSERTNOTREACHED();
-		break;
-
-
-	case SC_PrintNum: //PrintNum
-
-
-		//////// chua biet doc tu register nao
-		DEBUG(dbgSys, "Write integer number\n");
-
-		//SysPrintNum();
-
-		DEBUG(dbgSys, "Read number: " << result << "\n");
-
-		increase_PC();
-		return;
-
-		ASSERTNOTREACHED();
-		break;
-
-
-
-	case SC_ReadChar: //ReadChar
-
-	increase_PC();
-
-	return;
-
-	ASSERTNOTREACHED();
-	break;
-
-
-
-	case SC_PrintChar: //PrintChar
-
-	increase_PC();
-
-	return;
-
-	ASSERTNOTREACHED();
-	break;
-
-
-
-	case SC_RandomNum: //RandomNum
-
-	increase_PC();
-
-	return;
-
-	ASSERTNOTREACHED();
-	break;
-
-
-
-	case SC_ReadString://ReadString
-
-	increase_PC();
-
-	return;
-
-	ASSERTNOTREACHED();
-	break;
-
-	case SC_PrintString: //PrintString
-
-	increase_PC();
-
-	return;
-
-	ASSERTNOTREACHED();
-	break;
-	/*==========================END======================================*/
-
-      default:
-	cerr << "Unexpected system call " << type << "\n";
-	break;
-      }
-      break;
-
-	
+				/*increase_PC();
+				return;
+				ASSERTNOTREACHED();
+				break;*/
+      		default:
+				cerr << "Unexpected system call " << type << "\n";
+				break;
+      		}
+      	break;
 	/*==========================ADD===========================*/
 
 	case NoException: // Everything ok!
-	kernel->interrupt->setStatus(SystemMode);
-	break;
+		kernel->interrupt->setStatus(SystemMode);
+		break;
 	case PageFaultException:    // No valid translation foundf
 	case ReadOnlyException:     // Write attempted to page marked 
-					    // "read-only"
+					    	// "read-only"
 	case BusErrorException:     // Translation resulted in an 
 					    // invalid physical address
 	case AddressErrorException: // Unaligned reference or one that
@@ -220,13 +133,13 @@ ExceptionHandler(ExceptionType which)
 	case OverflowException:     // Integer overflow in add or sub.
 	case IllegalInstrException: // Unimplemented or reserved instr.
 	
-	/*==========================END====================*/
-	cerr << "Error: " << which << "\n";
-	SysHalt();
-	break;
+		cerr << "Error: " << which << "\n";
+		SysHalt();
+		break;
+		/*==========================END====================*/
     default:
-      cerr << "Unexpected user mode exception" << (int)which << "\n";
-      break;
+      	cerr << "Unexpected user mode exception" << (int)which << "\n";
+      	break;
     }
     ASSERTNOTREACHED();
 }

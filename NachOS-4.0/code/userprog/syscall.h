@@ -37,13 +37,12 @@
 
 #define SC_Add		42
 #define SC_ReadNum  50
-#define SC_PrintNum 51
+/*#define SC_PrintNum 51
 #define SC_ReadChar 52
 #define SC_PrintChar    53
 #define SC_RandomNum    54
 #define SC_ReadString   55
-#define SC_PrintString  56
-
+#define SC_PrintString  56*/
 
 #ifndef IN_ASM
 
