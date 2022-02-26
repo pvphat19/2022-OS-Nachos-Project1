@@ -12,6 +12,7 @@
 #define __USERPROG_KSYSCALL_H__ 
 
 #include "kernel.h"
+#include "synchconsole.h"
 /*#include "synchconsole.h"*/
 
 /*#define MAX_LENGTH 100
@@ -77,7 +78,12 @@ int SysReadNum(){
     return result;*/
     return 0;
 }
-
+char SysReadChar(){
+  return kernel->synchConsoleIn->GetChar();
+}
+void  SysPrintChar(char character){
+  kernel->synchConsoleOut->PutChar(character);
+}
 
 
 

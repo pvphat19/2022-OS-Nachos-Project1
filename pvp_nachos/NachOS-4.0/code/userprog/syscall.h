@@ -37,12 +37,12 @@
 
 #define SC_Add		42
 #define SC_ReadNum  50
-/*#define SC_PrintNum 51
+#define SC_PrintNum 51
 #define SC_ReadChar 52
 #define SC_PrintChar    53
 #define SC_RandomNum    54
 #define SC_ReadString   55
-#define SC_PrintString  56*/
+#define SC_PrintString  56
 
 #ifndef IN_ASM
 
@@ -66,6 +66,9 @@ void Halt();
 
 int Add(int op1, int op2);
 
+char ReadChar();
+
+void PrintChar(char character);
 /* Address space control operations: Exit, Exec, Execv, and Join */
 
 /* This user program is done (status = 0 means exited normally). */
@@ -112,8 +115,8 @@ typedef int OpenFileId;
  * the console device.
  */
 
-#define ConsoleInput	0  
-#define ConsoleOutput	1  
+#define ConsoleInputMacro	0  
+#define ConsoleOutputMacro	1  
  
 /* Create a Nachos file, with name "name" */
 /* Note: Create does not open the file.   */

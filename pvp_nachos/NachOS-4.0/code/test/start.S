@@ -122,6 +122,14 @@ Read:
 	j	$31
 	.end Read
 
+	.globl ReadChar
+	.ent	ReadChar
+ReadChar:
+	addiu $2,$0,SC_ReadChar
+	syscall
+	j	$31
+	.end ReadChar
+
 	.globl Write
 	.ent	Write
 Write:
@@ -129,6 +137,14 @@ Write:
 	syscall
 	j	$31
 	.end Write
+
+	.globl PrintChar
+	.ent   PrintChar
+PrintChar:
+	addiu $2,$0,SC_PrintChar
+	syscall
+	j	$31
+	.end PrintChar
 
 	.globl Close
 	.ent	Close
