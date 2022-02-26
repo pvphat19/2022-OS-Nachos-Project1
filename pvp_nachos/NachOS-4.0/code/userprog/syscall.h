@@ -71,6 +71,9 @@ char ReadChar();
 void PrintChar(char character);
 
 int RandomNum();
+
+void ReadString(char*str, int length);
+void PrintString(char*str);
 /* Address space control operations: Exit, Exec, Execv, and Join */
 
 /* This user program is done (status = 0 means exited normally). */
@@ -185,7 +188,6 @@ int ThreadJoin(ThreadId id);
  * Deletes current thread and returns ExitCode to every waiting lokal thread.
  */
 void ThreadExit(int ExitCode);	
-
 int ReadNum();
 
 void PrintNum();

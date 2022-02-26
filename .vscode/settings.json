@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.tcc": "c",
+        "functional": "c",
+        "system_error": "c"
+    }
+}
