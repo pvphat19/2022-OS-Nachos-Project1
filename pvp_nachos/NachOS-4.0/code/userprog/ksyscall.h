@@ -51,17 +51,17 @@ int SysReadNum(){
         if (isTerminalChar(c) == 1) break;
         else{
             if (numBuffer >= MAX_LENGTH){
-            DEBUG(dbgSys, "ReadNum: too long input");
-            break;
-        }
+                DEBUG(dbgSys, "ReadNum: too long input");
+                break;
+            }
 
-        if (isDigit(c) == -1){
-          if (numBuffer == 0) {
-            if (c == '-') isPositive = -1;
-            else if (c == '+') isPositive = 1;
-            else return 0;
-          }
-          else return 0;
+            if (isDigit(c) == 0){
+                if (numBuffer == 0) {
+                    if (c == '-') isPositive = -1;
+                    else if (c == '+') isPositive = 1;
+                    else return 0;
+                }
+                else return 0;
         }
         else{
           numBuffer = numBuffer + 1;

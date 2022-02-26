@@ -187,6 +187,8 @@ void ThreadExit(int ExitCode);
 int ReadNum();
 
 void PrintNum();
+
+void PrintAscii();
 #endif /* IN_ASM */
 
 #endif /* SYSCALL_H */
