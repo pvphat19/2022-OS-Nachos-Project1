@@ -13,6 +13,12 @@
 
 #include "kernel.h"
 #include "synchconsole.h"
+<<<<<<< HEAD
+=======
+/*#include "synchconsole.h"*/
+
+/*#define MAX_LENGTH 100
+>>>>>>> 725c4c5309eb435f7d0358cfea1ec04c998b7f6e
 
 #define MAX_LENGTH 10
 char buffer[MAX_LENGTH + 6];
@@ -76,7 +82,12 @@ int SysReadNum(){
     result = result * isPositive;
     return result;
 }
-
+char SysReadChar(){
+  return kernel->synchConsoleIn->GetChar();
+}
+void  SysPrintChar(char character){
+  kernel->synchConsoleOut->PutChar(character);
+}
 
 
 

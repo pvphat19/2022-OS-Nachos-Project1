@@ -3070,6 +3070,7 @@ exception.o: ../userprog/exception.cc /usr/include/stdc-predef.h \
  /usr/include/stdio.h /usr/include/x86_64-linux-gnu/bits/libio.h \
  /usr/include/x86_64-linux-gnu/bits/_G_config.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
  /usr/include/c++/7/cerrno /usr/include/errno.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
@@ -3100,6 +3101,17 @@ exception.o: ../userprog/exception.cc /usr/include/stdc-predef.h \
  ../threads/alarm.h ../machine/timer.h ../userprog/syscall.h \
  ../userprog/errno.h ../userprog/ksyscall.h ../userprog/synchconsole.h \
  ../machine/console.h ../threads/synch.h
+=======
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/strings.h ../threads/kernel.h ../threads/thread.h \
+ ../machine/machine.h ../machine/translate.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../threads/scheduler.h \
+ ../lib/list.h ../lib/list.cc ../machine/interrupt.h \
+ ../machine/callback.h ../machine/stats.h ../threads/alarm.h \
+ ../machine/timer.h ../userprog/syscall.h ../userprog/errno.h \
+ ../userprog/ksyscall.h ../userprog/synchconsole.h ../machine/console.h \
+ ../threads/synch.h
+>>>>>>> 725c4c5309eb435f7d0358cfea1ec04c998b7f6e
 synchconsole.o: ../userprog/synchconsole.cc /usr/include/stdc-predef.h \
  ../lib/copyright.h ../userprog/synchconsole.h ../lib/utility.h \
  ../machine/callback.h ../machine/console.h ../threads/synch.h \

@@ -111,7 +111,32 @@ void ExceptionHandler(ExceptionType which)
 				increase_PC();
 				return;
 				ASSERTNOTREACHED();
+<<<<<<< HEAD
 				break;
+=======
+				break;*/
+			case SC_ReadChar:
+			    DEBUG(dbgSys, "Read char\n");
+				char res;
+				res= SysReadChar();
+				kernel->machine->WriteRegister(2, (int)res);
+				increase_PC();
+
+				return;
+	
+				ASSERTNOTREACHED();
+			case SC_PrintChar:
+			    DEBUG(dbgSys,"PrintChar\n");
+				char res1;
+				res1=(char)kernel->machine->ReadRegister(4);
+				SysPrintChar(res1);
+                increase_PC();
+
+				return;
+	
+				ASSERTNOTREACHED();
+
+>>>>>>> 725c4c5309eb435f7d0358cfea1ec04c998b7f6e
       		default:
 				cerr << "Unexpected system call " << type << "\n";
 				break;
