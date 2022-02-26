@@ -69,6 +69,8 @@ int Add(int op1, int op2);
 char ReadChar();
 
 void PrintChar(char character);
+
+int RandomNum();
 /* Address space control operations: Exit, Exec, Execv, and Join */
 
 /* This user program is done (status = 0 means exited normally). */

@@ -84,6 +84,25 @@ char SysReadChar(){
 void  SysPrintChar(char character){
   kernel->synchConsoleOut->PutChar(character);
 }
+int RandomNum(){
+  return rand();
+}
+char* SysReadString(int length){
+  char*str=new char[length+1];
+  DEBUG(dbgSys,"Hi");
+  for (int i=0;i<length;i++){
+    str[i]=SysReadChar();
+    if(str[i]=='\n' ) break;
+    DEBUG(dbgSys,str[i]);
+  }
+  str[length]='\0';
+  return str;
+}
+void SysPrintString(char*newstr,int strlength){
+     for(int i=0;i<strlength;i++){
+       kernel->synchConsoleOut->PutChar(newstr[i]);
+     }
+}
 
 
 

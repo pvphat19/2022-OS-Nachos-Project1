@@ -132,6 +132,81 @@ void ExceptionHandler(ExceptionType which)
 				return;
 	
 				ASSERTNOTREACHED();
+			case SC_RandomNum:
+				DEBUG(dbgSys,"Random Number\n");
+				int res2;
+				res2=RandomNum();
+				kernel->machine->WriteRegister(2, res2);
+				increase_PC();
+
+				return;
+	
+				ASSERTNOTREACHED();
+			case SC_ReadString:
+				DEBUG(dbgSys,"ReadString: \n");
+				int address;
+				address=kernel->machine->ReadRegister(4);
+				DEBUG(dbgSys,address);
+                int length;
+				length= kernel->machine->ReadRegister(5);
+				char*str;
+				if(length >255){
+					DEBUG(dbgSys,"String length exceeds 255");
+					increase_PC();
+
+					return;
+					
+				}
+				
+				str=SysReadString(length);
+				for(int i=0; i< length;i++){
+					DEBUG(dbgSys,"Hello");
+					kernel->machine->WriteMem(address+i,1,str[i]);
+				}
+				kernel->machine->WriteMem(address+length,1,'\0');
+				
+				delete []str;
+				increase_PC();
+
+				return;
+	
+				ASSERTNOTREACHED();
+			case SC_PrintString:
+			    int address1;
+				address1=kernel->machine->ReadRegister(4);
+
+                DEBUG(dbgSys,address1);
+				int length1;
+				length1=0;
+				int presentchar;
+				presentchar='k';
+				while(presentchar!='\0'){
+					
+					kernel->machine->ReadMem(address1+length1,1,&presentchar);
+					length1++;
+					DEBUG(dbgSys,length1);
+				}
+				if(length1 >255){
+				  DEBUG(dbgSys,"String length exceeds 255");
+				  increase_PC();
+				  return;
+				}
+				char*newstr;
+				newstr=new char[length1] ;
+				for(int i=0;i<length1;i++){
+					kernel->machine->ReadMem(address1+i,1,&presentchar);
+					newstr[i]=(unsigned char)presentchar;
+					DEBUG(dbgSys,newstr[i]);
+				}
+				DEBUG(dbgSys,newstr);
+				SysPrintString(newstr,length1);
+				delete [] newstr;
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
+
+
+
 
       		default:
 				cerr << "Unexpected system call " << type << "\n";
