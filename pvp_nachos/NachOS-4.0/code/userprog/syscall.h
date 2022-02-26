@@ -184,6 +184,8 @@ int ThreadJoin(ThreadId id);
  */
 void ThreadExit(int ExitCode);	
 
+int ReadNum();
+
 #endif /* IN_ASM */
 
 #endif /* SYSCALL_H */

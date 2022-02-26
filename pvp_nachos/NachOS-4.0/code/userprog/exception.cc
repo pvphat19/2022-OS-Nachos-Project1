@@ -99,19 +99,19 @@ void ExceptionHandler(ExceptionType which)
 				ASSERTNOTREACHED();
 
 				break;
-			/*case SC_ReadNum: // ReadNum
+			case SC_ReadNum: // ReadNum
 				DEBUG(dbgSys, "Read integer number\n");
 
-				/*int result;
-				result = SysReadNum();
+				int ReadNumResult;
+				ReadNumResult = SysReadNum();
 
-				DEBUG(dbgSys, "Read number: " << result << "\n");
-				kernel->machine->WriteRegister(2, result); /////////////// chua biet viet vao register nao*/
+				DEBUG(dbgSys, "Read number: " << ReadNumResult << "\n");
+				kernel->machine->WriteRegister(2, ReadNumResult);
 
-				/*increase_PC();
+				increase_PC();
 				return;
 				ASSERTNOTREACHED();
-				break;*/
+				break;
 			case SC_ReadChar:
 			    DEBUG(dbgSys, "Read char\n");
 				char res;
