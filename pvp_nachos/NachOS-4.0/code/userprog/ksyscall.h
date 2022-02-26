@@ -77,12 +77,33 @@ int SysReadNum(){
     result = result * isPositive;
     return result;
 }
-
+void SysPrintNum(int number){
+    numBuffer = 0;
+    int isPositive = 1;
+    if (number == 0){
+        kernel->synchConsoleOut->PutChar('0');
+        return;
+    }
+    if(number < 0){
+        isPositive = -1;
+        number = -number;
+    }
+    while (number){
+        int digit = number % 10;
+        number = number /10;
+        buffer[numBuffer] = '0' + digit;
+        numBuffer++;
+    }
+    if (isPositive == -1) kernel->synchConsoleOut->PutChar('-');
+    for (int i = numBuffer -1; i >=0; i--){
+        kernel->synchConsoleOut->PutChar(buffer[i]);
+    }
+}
 char SysReadChar(){
-  return kernel->synchConsoleIn->GetChar();
+    return kernel->synchConsoleIn->GetChar();
 }
 void  SysPrintChar(char character){
-  kernel->synchConsoleOut->PutChar(character);
+    kernel->synchConsoleOut->PutChar(character);
 }
 
 

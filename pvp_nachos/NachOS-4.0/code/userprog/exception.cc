@@ -112,6 +112,15 @@ void ExceptionHandler(ExceptionType which)
 				return;
 				ASSERTNOTREACHED();
 				break;
+			case SC_PrintNum: // ReadNum
+				DEBUG(dbgSys, "Write integer number" << kernel->machine->ReadRegister(4) << "\n");
+
+				SysPrintNum((int)kernel->machine->ReadRegister(4));
+				
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
+				break;
 			case SC_ReadChar:
 			    DEBUG(dbgSys, "Read char\n");
 				char res;
