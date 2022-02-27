@@ -80,8 +80,10 @@ int SysReadNum(){
             }
             else return 0;
         }
-        int num = int(buffer[i]) - int('0');
-        result = result*10 + num;
+        else{
+            int num = int(buffer[i]) - int('0');
+            result = result*10 + num;
+        }
     }
     result = result * isPositive;
     return result;
