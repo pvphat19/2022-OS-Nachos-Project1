@@ -11,9 +11,10 @@ int
 main()
 {
   int result;
-  
-  result = Add(42, 23);
-
+  char string1[10];
+  result = Add(42, 19);
+  ReadString(string1, 10);
+  PrintString(string1);
   Halt();
   /* not reached */
 }
