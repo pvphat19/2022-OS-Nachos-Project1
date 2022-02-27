@@ -62,12 +62,12 @@ int SysReadNum(){
                     else return 0;
                 }
                 else return 0;
+            }
+            else{
+                numBuffer = numBuffer + 1;
+                buffer[numBuffer-1] = c;
+            }
         }
-        else{
-          numBuffer = numBuffer + 1;
-          buffer[numBuffer-1] = c;
-        }
-      }
     }
     int result = 0;
     for (int i=0;i<numBuffer;i++){
