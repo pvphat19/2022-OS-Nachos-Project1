@@ -32,6 +32,7 @@
 
 #ifndef FS_H
 #define FS_H
+//#define FILESYS_STUB // =DDDDDDDDDDDDDDDDDDDDDDD
 
 #include "copyright.h"
 #include "sysdep.h"

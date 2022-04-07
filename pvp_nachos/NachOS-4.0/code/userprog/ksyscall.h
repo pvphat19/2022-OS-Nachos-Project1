@@ -135,7 +135,26 @@ void SysPrintString(char*newstr,int strlength){
        kernel->synchConsoleOut->PutChar(newstr[i]);
      }
 }
-
+bool SysCreateFile(char* filename){
+    bool isSuccess;
+    if (filename == NULL){
+        DEBUG(dbgSys, "Error in memory\n");
+        isSuccess = false;
+    }
+    else if (strlen(filename) == 0){
+        DEBUG(dbgSys, "File name can not be empty\n");
+        isSuccess = false;
+    }
+    else{
+        if (kernel->fileSystem->Create(filename)){
+            isSuccess = true;
+        }
+        else {
+            isSuccess = false;
+        }
+    }
+    return isSuccess;
+}
 
 
 #endif /* ! __USERPROG_KSYSCALL_H__ */

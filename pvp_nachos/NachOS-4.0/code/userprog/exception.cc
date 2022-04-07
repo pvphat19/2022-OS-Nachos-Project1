@@ -62,6 +62,24 @@ void increase_PC(){
 	}
 }
 
+char* stringU2S(int address) {
+	int length = 0;
+	int curChar;
+
+	while(curChar!='\0'){
+		kernel->machine->ReadMem(address+length, 1, &curChar);
+		length++;
+	}
+
+	char* newStr = new char[length+1];
+	for(int i=0; i<length; i++){
+		kernel->machine->ReadMem(address+i, 1, &curChar);
+		newStr[i]=(unsigned char)curChar;
+	}
+	newStr[length] = '\0';
+	return newStr;
+}
+void Handle_SC_Create();
 void ExceptionHandler(ExceptionType which)
 {
     int type = kernel->machine->ReadRegister(2);
@@ -214,7 +232,11 @@ void ExceptionHandler(ExceptionType which)
 				return;
 				ASSERTNOTREACHED();
 
-
+			case SC_Create:
+				Handle_SC_Create();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
 
 
       		default:
@@ -247,4 +269,17 @@ void ExceptionHandler(ExceptionType which)
       	break;
     }
     ASSERTNOTREACHED();
+}
+
+void Handle_SC_Create(){
+	int address = kernel->machine->ReadRegister(4);
+    char* fileName = stringU2S(address);
+
+    if (SysCreateFile(fileName))
+        kernel->machine->WriteRegister(2, 0);
+    else
+        kernel->machine->WriteRegister(2, -1);
+
+    delete[] fileName;
+	return;
 }
