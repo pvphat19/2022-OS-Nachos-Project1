@@ -55,7 +55,7 @@ int SysReadNum(){
                 break;
             }
 
-            if (isDigit(c) == 0){
+            /*if (isDigit(c) == 0){
                 if (numBuffer == 0) {
                     if (c == '-') isPositive = -1;
                     else if (c == '+') isPositive = 1;
@@ -63,16 +63,27 @@ int SysReadNum(){
                 }
                 else return 0;
             }
-            else{
+            else*/{
                 numBuffer = numBuffer + 1;
                 buffer[numBuffer-1] = c;
             }
         }
     }
     int result = 0;
+    if (numBuffer == 0) return 0;
     for (int i=0;i<numBuffer;i++){
-      int num = int(buffer[i]) - int('0');
-      result = result*10 + num;
+        if (isDigit(buffer[i]) == 0){
+            if (i == 0) {
+                if (buffer[i] == '-') isPositive = -1;
+                else if (buffer[i] == '+') isPositive = 1;
+                else return 0;
+            }
+            else return 0;
+        }
+        else{
+            int num = int(buffer[i]) - int('0');
+            result = result*10 + num;
+        }
     }
     result = result * isPositive;
     return result;
