@@ -113,7 +113,7 @@ PROGRAMS = unknownhost
 else
 # change this if you create a new test program!
 
-PROGRAMS = add halt shell matmult sort segments help ReadNum PrintNum ascii BubbleSort Create
+PROGRAMS = add halt shell matmult sort segments help ReadNum PrintNum ascii BubbleSort createfile
 endif
 
 all: $(PROGRAMS)
@@ -187,11 +187,11 @@ BubbleSort: BubbleSort.o start.o
 	$(LD) $(LDFLAGS) start.o BubbleSort.o -o BubbleSort.coff
 	$(COFF2NOFF) BubbleSort.coff BubbleSort
 
-Create.o: Create.c
-	$(CC) $(CFLAGS) -c Create.c
-Create: Create.o start.o
-	$(LD) $(LDFLAGS) start.o Create.o -o Create.coff
-	$(COFF2NOFF) Create.coff Create
+createfile.o: createfile.c
+	$(CC) $(CFLAGS) -c createfile.c
+createfile: createfile.o start.o
+	$(LD) $(LDFLAGS) start.o createfile.o -o createfile.coff
+	$(COFF2NOFF) createfile.coff createfile
 
 
 clean:

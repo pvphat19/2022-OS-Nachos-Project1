@@ -328,7 +328,7 @@ void Handle_SC_Create(){
     char* fileName = stringU2S(address);
 
     if (SysCreateFile(fileName))
-        kernel->machine->WriteRegister(2, 0);
+        kernel->machine->WriteRegister(2, 1);
     else
         kernel->machine->WriteRegister(2, -1);
 
@@ -359,7 +359,12 @@ void Handle_SC_Read() {
 	return;
 }
 void Handle_SC_Write() {
-	
+	int address = kernel->machine->ReadRegister(4);
+	int size = kernel->machine->ReadRegister(5);
+	int openFileId = kernel->machine->ReadRegister(6);
+	char * buffer = stringU2S(address);
+
+	return;
 }
 void Handle_SC_Seek() {
 	
