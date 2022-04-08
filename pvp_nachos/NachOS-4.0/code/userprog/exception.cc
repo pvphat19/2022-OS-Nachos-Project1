@@ -328,7 +328,7 @@ void Handle_SC_Create(){
     char* fileName = stringU2S(address);
 
     if (SysCreateFile(fileName))
-        kernel->machine->WriteRegister(2, 0);
+        kernel->machine->WriteRegister(2, 1);
     else
         kernel->machine->WriteRegister(2, -1);
 
