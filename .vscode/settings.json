@@ -2,6 +2,9 @@
     "files.associations": {
         "*.tcc": "c",
         "functional": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "typeinfo": "cpp"
     }
 }

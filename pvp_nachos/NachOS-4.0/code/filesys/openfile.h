@@ -29,7 +29,13 @@
 					// See definitions listed under #else
 class OpenFile {
   public:
-    OpenFile(int f) { file = f; currentOffset = 0; }	// open the file
+    OpenFile(int f, char*name) 
+	{ 
+		file = f; 
+		currentOffset = 0; 
+		filename = new char[strlen(name)];
+		strcpy(filename, name);
+	}	// open the file
     ~OpenFile() { Close(file); }			// close the file
 
     int ReadAt(char *into, int numBytes, int position) { 
@@ -51,12 +57,16 @@ class OpenFile {
 		currentOffset += numWritten;
 		return numWritten;
 		}
+	int Seek(int position) { return currentOffset = position; }
 
     int Length() { Lseek(file, 0, 2); return Tell(file); }
+
+	char* getFilename() { return filename; }
     
   private:
     int file;
     int currentOffset;
+	char* filename;
 };
 
 #else // FILESYS

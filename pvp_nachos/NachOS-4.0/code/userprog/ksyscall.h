@@ -13,6 +13,7 @@
 
 #include "kernel.h"
 #include "synchconsole.h"
+
 #include <stdlib.h>
 #define MAX_LENGTH 10
 
@@ -172,11 +173,22 @@ bool SysCloseFile(OpenFileId openFileId) {
     return kernel->fileSystem->Close(openFileId);
 }
 int SysRead(char* buffer, int charCount, int fileId) {
-    if (fileId == 0) {
-        return kernel->synchConsoleIn->GetString(buffer, charCount);
-    }
     return kernel->fileSystem->Read(buffer, charCount, fileId);
 }
-
+int SysWrite(char* buffer, int charCount, int fileId){
+     return kernel->fileSystem->Write(buffer, charCount, fileId);
+}
+int SysSeek(int seekPos, int fileId) {
+    return kernel->fileSystem->Seek(seekPos, fileId);
+}
+int SysRemove(char* name) {
+    if (kernel->fileSystem->Remove(name))
+        return 0;
+    else    
+    {
+        DEBUG(dbgSys, "Fail to remove");
+        return -1;
+    }
+}
 
 #endif /* ! __USERPROG_KSYSCALL_H__ */

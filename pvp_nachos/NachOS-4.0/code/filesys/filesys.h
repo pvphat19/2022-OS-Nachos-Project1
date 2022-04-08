@@ -61,7 +61,7 @@ class FileSystem {
 		int fileDescriptor = OpenForReadWrite(name, FALSE);
 		if (fileDescriptor == -1) 
 			return NULL;
-		return new OpenFile(fileDescriptor);
+		return new OpenFile(fileDescriptor, name);
 	}
 	
     bool Create(char *name) {
@@ -84,7 +84,7 @@ class FileSystem {
 
 		if (fileDescriptor == -1) 
 			return -1;
-		openFile[openFileId] = new OpenFile(fileDescriptor);
+		openFile[openFileId] = new OpenFile(fileDescriptor, name);
 		return openFileId;
     }
 
@@ -98,8 +98,35 @@ class FileSystem {
 			return true;
 		}
 	}
+	int Read(char*buffer,int size,int id){
+		if (id < 0 || id >  MAX_OPEN_FILE) return -1;
+		if(openFile[id]==NULL) return -1;
+		int result = openFile[id]->Read(buffer,size);
+		if(result!=size) return -2;
+		return result;
+	}
+	int Write(char *buffer, int size, int id) {
+		if (id < 0 || id >  MAX_OPEN_FILE) return -1;
+		if (openFile[id] == NULL )
+			return -1;
+		return openFile[id]->Write(buffer, size);
+    }
+	int Seek(int pos, int id) {
+        if (id < 0 || id >  MAX_OPEN_FILE) return -1;
+        if (openFile[id] == NULL) return -1;
+        // use seek(-1) to move to the end of file
+        if (pos == -1) pos = openFile[id]->Length();
+        if (pos < 0 || pos > openFile[id]->Length()) return -1;
+        return openFile[id]->Seek(pos);
+    }
 
-    bool Remove(char *name) { return Unlink(name) == 0; }
+    bool Remove(char *name) { 
+		for (int i = 0; i < MAX_OPEN_FILE; i++) {
+			if (openFile[i] && strcmp(name, openFile[i]->getFilename()) == 0)
+				return false;
+		}
+		return Unlink(name) == 0; 
+	}
 
 };
 
