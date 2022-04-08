@@ -79,10 +79,22 @@ char* stringU2S(int address) {
 	newStr[length] = '\0';
 	return newStr;
 }
+char* stringS2U(char* str, int address) {
+	int length = strlen(str);
+	for(int i=0; i<length; i++){
+		kernel->machine->WriteMem(address+i, 1, str[i]);
+	}
+	kernel->machine->WriteMem(address + length, 1, '\0');;
+}
 
 void Handle_SC_Create();
 void Handle_SC_Open();
 void Handle_SC_Close();
+void Handle_SC_Read();
+void Handle_SC_Write();
+void Handle_SC_Seek();
+void Handle_SC_Remove();
+
 
 void ExceptionHandler(ExceptionType which)
 {
@@ -253,6 +265,32 @@ void ExceptionHandler(ExceptionType which)
 				increase_PC();
 				return;
 				ASSERTNOTREACHED();
+
+			case SC_Read:
+				Handle_SC_Read();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
+
+			case SC_Write:
+				Handle_SC_Write();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
+
+			case SC_Seek:
+				Handle_SC_Seek();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
+			
+			case SC_Remove:
+				Handle_SC_Remove();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
+
+
       		default:
 				cerr << "Unexpected system call " << type << "\n";
 				break;
@@ -311,4 +349,21 @@ void Handle_SC_Close() {
     else
         kernel->machine->WriteRegister(2, -1);
 	return;
+}
+void Handle_SC_Read() {
+	int address = kernel->machine->ReadRegister(4);
+	int size = kernel->machine->ReadRegister(5);
+	int openFileId = kernel->machine->ReadRegister(6);
+	char* buffer = "testing";
+	stringS2U(buffer, address);
+	return;
+}
+void Handle_SC_Write() {
+	
+}
+void Handle_SC_Seek() {
+	
+}
+void Handle_SC_Remove() {
+	
 }
