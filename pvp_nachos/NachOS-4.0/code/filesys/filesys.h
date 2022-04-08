@@ -32,7 +32,9 @@
 
 #ifndef FS_H
 #define FS_H
+#define MAX_OPEN_FILE 10
 //#define FILESYS_STUB // =DDDDDDDDDDDDDDDDDDDDDDD
+typedef int OpenFileId;	
 
 #include "copyright.h"
 #include "sysdep.h"
@@ -43,22 +45,59 @@
 				// implementation is available
 class FileSystem {
   public:
-    FileSystem() {}
-
+	OpenFile **openFile;
+    FileSystem() {
+		openFile = new OpenFile*[MAX_OPEN_FILE];
+		for (int i = 0; i < MAX_OPEN_FILE; i++) 
+			openFile[i] = NULL;
+	}
+	~FileSystem() {
+		for (int i = 0; i < MAX_OPEN_FILE; i++) 
+			if (openFile[i])
+				delete openFile[i];
+		delete[] openFile;
+	}
+	OpenFile *Open(char *name) {
+		int fileDescriptor = OpenForReadWrite(name, FALSE);
+		if (fileDescriptor == -1) 
+			return NULL;
+		return new OpenFile(fileDescriptor);
+	}
+	
     bool Create(char *name) {
-	int fileDescriptor = OpenForWrite(name);
+		int fileDescriptor = OpenForWrite(name);
 
-	if (fileDescriptor == -1) return FALSE;
-	Close(fileDescriptor); 
-	return TRUE; 
+		if (fileDescriptor == -1) return FALSE;
+		Close(fileDescriptor); 
+		return TRUE; 
 	}
 
-    OpenFile* Open(char *name) {
-	  int fileDescriptor = OpenForReadWrite(name, FALSE);
+    OpenFileId OpenWithId(char *name) {
+		OpenFileId openFileId;
+		for (int i = 0; i < MAX_OPEN_FILE; i++) 
+			if (openFile[i] == NULL)
+			{
+				openFileId = i;
+				break;
+			}
+		int fileDescriptor = OpenForReadWrite(name, FALSE);
 
-	  if (fileDescriptor == -1) return NULL;
-	  return new OpenFile(fileDescriptor);
-      }
+		if (fileDescriptor == -1) 
+			return -1;
+		openFile[openFileId] = new OpenFile(fileDescriptor);
+		return openFileId;
+    }
+
+	bool Close(OpenFileId openFileId) {
+		if (openFile[openFileId] == NULL)
+			return false;
+		else
+		{
+			delete openFile[openFileId];
+			openFile[openFileId] = NULL;
+			return true;
+		}
+	}
 
     bool Remove(char *name) { return Unlink(name) == 0; }
 

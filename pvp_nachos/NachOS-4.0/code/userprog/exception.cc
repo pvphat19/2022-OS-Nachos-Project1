@@ -79,7 +79,11 @@ char* stringU2S(int address) {
 	newStr[length] = '\0';
 	return newStr;
 }
+
 void Handle_SC_Create();
+void Handle_SC_Open();
+void Handle_SC_Close();
+
 void ExceptionHandler(ExceptionType which)
 {
     int type = kernel->machine->ReadRegister(2);
@@ -238,7 +242,17 @@ void ExceptionHandler(ExceptionType which)
 				return;
 				ASSERTNOTREACHED();
 
+			case SC_Open:
+				Handle_SC_Open();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
 
+			case SC_Close:
+				Handle_SC_Close();
+				increase_PC();
+				return;
+				ASSERTNOTREACHED();
       		default:
 				cerr << "Unexpected system call " << type << "\n";
 				break;
@@ -281,5 +295,20 @@ void Handle_SC_Create(){
         kernel->machine->WriteRegister(2, -1);
 
     delete[] fileName;
+	return;
+}
+void Handle_SC_Open() {
+	int address = kernel->machine->ReadRegister(4);
+    char* fileName = stringU2S(address);
+	kernel->machine->WriteRegister(2, SysOpenFile(fileName));
+	delete[] fileName;
+	return;
+}
+void Handle_SC_Close() {
+	int openFileId = kernel->machine->ReadRegister(4);
+	if (SysCloseFile(openFileId))
+        kernel->machine->WriteRegister(2, 0);
+    else
+        kernel->machine->WriteRegister(2, -1);
 	return;
 }

@@ -190,7 +190,7 @@ int ThreadJoin(ThreadId id);
 void ThreadExit(int ExitCode);	
 int ReadNum();
 
-void PrintNum();
+void PrintNum(int num);
 
 void PrintAscii();
 #endif /* IN_ASM */

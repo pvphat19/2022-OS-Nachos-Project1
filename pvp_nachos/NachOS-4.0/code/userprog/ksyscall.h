@@ -155,6 +155,22 @@ bool SysCreateFile(char* filename){
     }
     return isSuccess;
 }
+OpenFileId SysOpenFile(char* filename) {
+    if (filename == NULL){
+        DEBUG(dbgSys, "Error in memory\n");
+        return -1;
+    }
+    else if (strlen(filename) == 0){
+        DEBUG(dbgSys, "File name can not be empty\n");
+        return -1;
+    }
+    else
+        return kernel->fileSystem->OpenWithId(filename);
+
+}
+bool SysCloseFile(OpenFileId openFileId) {
+    return kernel->fileSystem->Close(openFileId);
+}
 
 
 #endif /* ! __USERPROG_KSYSCALL_H__ */
