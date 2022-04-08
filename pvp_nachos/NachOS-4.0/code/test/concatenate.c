@@ -52,6 +52,6 @@ int main(){
     else{
         PrintString("Can not create file.\n");
     }
-    halt();
+    Halt();
     return 0;
 }
