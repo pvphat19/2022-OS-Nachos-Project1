@@ -13,7 +13,7 @@
 
 #include "kernel.h"
 #include "synchconsole.h"
-
+#include <stdlib.h>
 #define MAX_LENGTH 10
 
 char buffer[MAX_LENGTH + 6];
@@ -170,6 +170,12 @@ OpenFileId SysOpenFile(char* filename) {
 }
 bool SysCloseFile(OpenFileId openFileId) {
     return kernel->fileSystem->Close(openFileId);
+}
+int SysRead(char* buffer, int charCount, int fileId) {
+    if (fileId == 0) {
+        return kernel->synchConsoleIn->GetString(buffer, charCount);
+    }
+    return kernel->fileSystem->Read(buffer, charCount, fileId);
 }
 
 
