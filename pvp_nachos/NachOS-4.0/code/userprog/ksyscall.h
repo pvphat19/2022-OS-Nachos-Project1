@@ -13,7 +13,10 @@
 
 #include "kernel.h"
 #include "synchconsole.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6e25448046ad750c9f7e2e387f061dec3e56aada
 #include <stdlib.h>
 #define MAX_LENGTH 10
 
