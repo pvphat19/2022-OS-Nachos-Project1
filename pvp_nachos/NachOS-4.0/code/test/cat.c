@@ -13,7 +13,8 @@ int main(){
     }
     else{
         char *buffer;
-        int size;// chua biet
+        int size = Seek(-1, openFileId);
+        Seek(0, openFileId);
         Read(buffer, size, openFileId);
         PrintString("The content of file ");
         PrintString(fileName);

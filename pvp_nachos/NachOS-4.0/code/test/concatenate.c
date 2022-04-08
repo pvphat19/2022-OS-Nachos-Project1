@@ -22,14 +22,12 @@ int main(){
         PrintString("Can not open second file.\n");
     }
     else{
-        char *buffer1;
-        char * buffer2;
-        int size1;
-        int size2;
-        Read(buffer1, size1, openFileId1);
-        Read(buffer2, size2, openFileId2);
+        Seek(-1, openFileId1);
         char *buffer;
-        
+        int size = Seek(-1, openFileId2);
+        Seek(0, openFileId2);
+        Read(buffer, size, openFileId2);
+        Write(buffer, size, openFileId1);
     }
 
     if (openFileId1 > 0){

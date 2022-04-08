@@ -9,9 +9,9 @@ int main(){
     ReadString(srcFileName, srcSize);
     char *dstFileName;
     int dstSize;
-    PrintString("Please enter the length of source file name: ");
+    PrintString("Please enter the length of destination file name: ");
     dstSize = ReadNum();
-    PrintString("Please enter the source file name:");
+    PrintString("Please enter the destination file name:");
     ReadString(dstFileName, dstSize);
     int srcOpenFileId = Open(srcFileName);
     int dstOpenFileId = Open(dstFileName);
@@ -23,8 +23,10 @@ int main(){
     }
     else{
         char *buffer;
-        int size; // chua biet
+        int size = Seek(-1, srcOpenFileId);
+        Seek(0, srcOpenFileId);
         Read(buffer, size, srcOpenFileId);
+        /// delete du lieu file cu
         Write(buffer, size, dstOpenFileId);
     }
 
@@ -34,7 +36,7 @@ int main(){
     if (dstOpenFileId > 0){
         Close(dstOpenFileId);
     }
-    halt();*/
+    Halt();*/
     char *fileName;
     int size;
     PrintString("Please enter the length of file name: ");
