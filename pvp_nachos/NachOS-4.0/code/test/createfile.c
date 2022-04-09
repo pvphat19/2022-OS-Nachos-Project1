@@ -5,7 +5,7 @@ int main(){
     int size;
     PrintString("Please enter the length of file name: ");
     size = ReadNum();
-    PrintString("Please enter file name:");
+    PrintString("Please enter file name: ");
     ReadString(fileName, size);
     if (Create(fileName) == 1){
         PrintString("File ");

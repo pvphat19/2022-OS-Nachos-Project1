@@ -172,14 +172,14 @@ OpenFileId SysOpenFile(char* filename) {
 bool SysCloseFile(OpenFileId openFileId) {
     return kernel->fileSystem->Close(openFileId);
 }
-int SysRead(char* buffer, int charCount, int fileId) {
-    return kernel->fileSystem->Read(buffer, charCount, fileId);
+int SysRead(char* buffer, int size, OpenFileId openFileId) {
+    return kernel->fileSystem->Read(buffer, size, openFileId);
 }
-int SysWrite(char* buffer, int charCount, int fileId){
-     return kernel->fileSystem->Write(buffer, charCount, fileId);
+int SysWrite(char* buffer, int size, OpenFileId openFileId) {
+     return kernel->fileSystem->Write(buffer, size, openFileId);
 }
-int SysSeek(int seekPos, int fileId) {
-    return kernel->fileSystem->Seek(seekPos, fileId);
+int SysSeek(int position, OpenFileId openFileId) {
+    return kernel->fileSystem->Seek(position, openFileId);
 }
 int SysRemove(char* name) {
     if (kernel->fileSystem->Remove(name))

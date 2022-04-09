@@ -5,6 +5,8 @@
         "system_error": "c",
         "ostream": "c",
         "sstream": "c",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "unordered_map": "cpp",
+        "iostream": "cpp"
     }
 }

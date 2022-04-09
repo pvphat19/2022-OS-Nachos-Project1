@@ -354,9 +354,14 @@ void Handle_SC_Read() {
 	int address = kernel->machine->ReadRegister(4);
 	int size = kernel->machine->ReadRegister(5);
 	int openFileId = kernel->machine->ReadRegister(6);
-	char* buffer = new char[size+1];
-	kernel->machine->WriteRegister(2, SysRead(buffer, size, openFileId));
-	stringS2U(buffer, address);
+	char* buffer = NULL;	
+	int res = SysRead(buffer, size, openFileId);
+	if (buffer and res == -1) 
+	{
+		stringS2U(buffer, address);
+		delete[] buffer;
+	}
+	kernel->machine->WriteRegister(2, res);
 	return;
 }
 void Handle_SC_Write() {
@@ -369,10 +374,8 @@ void Handle_SC_Write() {
 }
 void Handle_SC_Seek() {
 	 int seekPos = kernel->machine->ReadRegister(4);
-    int fileId = kernel->machine->ReadRegister(5);
-
-    kernel->machine->WriteRegister(2, SysSeek(seekPos, fileId));
-	DEBUG(dbgSys,seekPos);
+    int openFileId = kernel->machine->ReadRegister(5);
+    kernel->machine->WriteRegister(2, SysSeek(seekPos, openFileId));
 	return;
 }
 void Handle_SC_Remove() {
