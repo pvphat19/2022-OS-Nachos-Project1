@@ -57,7 +57,11 @@ class OpenFile {
 		currentOffset += numWritten;
 		return numWritten;
 		}
-	int Seek(int position) { return currentOffset = position; }
+	int Seek(int position) 
+	{ 
+		currentOffset = position;
+		return currentOffset;
+	}
 
     int Length() { Lseek(file, 0, 2); return Tell(file); }
 

@@ -64,7 +64,7 @@ void increase_PC(){
 
 char* stringU2S(int address) {
 	int length = 0;
-	int curChar;
+	int curChar = 'k';
 
 	while(curChar!='\0'){
 		kernel->machine->ReadMem(address+length, 1, &curChar);
@@ -79,8 +79,7 @@ char* stringU2S(int address) {
 	newStr[length] = '\0';
 	return newStr;
 }
-char* stringS2U(char* str, int address) {
-	int length = strlen(str);
+char* stringS2U(char* str, int address, int length) {
 	for(int i=0; i<length; i++){
 		kernel->machine->WriteMem(address+i, 1, str[i]);
 	}
@@ -355,8 +354,12 @@ void Handle_SC_Read() {
 	int size = kernel->machine->ReadRegister(5);
 	int openFileId = kernel->machine->ReadRegister(6);
 	char* buffer = new char[size+1];
-	kernel->machine->WriteRegister(2, SysRead(buffer, size, openFileId));
-	stringS2U(buffer, address);
+	int res = SysRead(buffer, size, openFileId);
+	if (res != -1) {
+		stringS2U(buffer, address, size); 
+	}
+	delete[] buffer;
+	kernel->machine->WriteRegister(2, res);
 	return;
 }
 void Handle_SC_Write() {
@@ -365,12 +368,12 @@ void Handle_SC_Write() {
 	int openFileId = kernel->machine->ReadRegister(6);
 	char* buffer = stringU2S(address);
 	kernel->machine->WriteRegister(2, SysWrite(buffer, size, openFileId));
+	delete[] buffer;
 	return;
 }
 void Handle_SC_Seek() {
-	 int seekPos = kernel->machine->ReadRegister(4);
+	int seekPos = kernel->machine->ReadRegister(4);
     int fileId = kernel->machine->ReadRegister(5);
-
     kernel->machine->WriteRegister(2, SysSeek(seekPos, fileId));
 	DEBUG(dbgSys,seekPos);
 	return;

@@ -98,26 +98,34 @@ class FileSystem {
 			return true;
 		}
 	}
-	int Read(char*buffer,int size,int id){
-		if (id < 0 || id >  MAX_OPEN_FILE) return -1;
-		if(openFile[id]==NULL) return -1;
-		int result = openFile[id]->Read(buffer,size);
-		if(result!=size) return -2;
+	int Read(char* buffer, int size, OpenFileId openFileId){
+		if (openFileId < 0 || openFileId >  MAX_OPEN_FILE) 
+			return -1;
+		if(openFile[openFileId]==NULL) 
+			return -1;
+		int result = openFile[openFileId]->Read(buffer,size);
+		if (result != size) 
+			return -1;
 		return result;
 	}
-	int Write(char *buffer, int size, int id) {
-		if (id < 0 || id >  MAX_OPEN_FILE) return -1;
-		if (openFile[id] == NULL )
+	int Write(char* buffer, int size, OpenFileId openFileId) {
+		if (openFileId < 0 || openFileId >  MAX_OPEN_FILE) 
 			return -1;
-		return openFile[id]->Write(buffer, size);
+		if (openFile[openFileId] == NULL )
+			return -1;
+		return openFile[openFileId]->Write(buffer, size);
     }
-	int Seek(int pos, int id) {
-        if (id < 0 || id >  MAX_OPEN_FILE) return -1;
-        if (openFile[id] == NULL) return -1;
+	int Seek(int pos, OpenFileId openFileId) {
+        if (openFileId < 0 || openFileId >  MAX_OPEN_FILE) 
+			return -1;
+        if (openFile[openFileId] == NULL) 
+			return -1;
         // use seek(-1) to move to the end of file
-        if (pos == -1) pos = openFile[id]->Length();
-        if (pos < 0 || pos > openFile[id]->Length()) return -1;
-        return openFile[id]->Seek(pos);
+        if (pos == -1) 
+			pos = openFile[openFileId]->Length();
+        if (pos < 0 || pos > openFile[openFileId]->Length()) 
+			return -1;
+        return openFile[openFileId]->Seek(pos);
     }
 
     bool Remove(char *name) { 
